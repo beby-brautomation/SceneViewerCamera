@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EventBindingSet id="P10_MainPageContent_eventbinding" xmlns="http://www.br-automation.com/iat2014/eventbinding/v2" xmlns:types="http://www.br-automation.com/iat2015/widgetTypes/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Bindings>
+    <EventBinding id="P10_MainPageContent.Image1.Click">
+      <Source xsi:type="widgets.brease.Image.Event" contentRefId="P10_MainPageContent" widgetRefId="Image1" event="Click" />
+      <Operand datatype="BOOL" name="StartVal">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::SVControl:Vis.Controls.Start">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="BOOL" name="PauseVal">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::SVControl:Vis.Controls.Pause">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="StartVal = FALSE AND PauseVal = FALSE">
+        <Sequence>
+          <Step order="0">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::SVControl:Vis.Controls.Start">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="widgets.brease.Image.Action" contentRefId="P10_MainPageContent" widgetRefId="Image1">
+                <Method xsi:type="widgets.brease.Image.Action.SetImage" image="Media/pause_black_24dp.svg" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+      <EventHandler condition="StartVal = TRUE AND PauseVal = FALSE">
+        <Sequence>
+          <Step order="0">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::SVControl:Vis.Controls.Pause">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="widgets.brease.Image.Action" contentRefId="P10_MainPageContent" widgetRefId="Image1">
+                <Method xsi:type="widgets.brease.Image.Action.SetImage" image="Media/play_arrow_black_24dp.svg" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+      <EventHandler condition="StartVal = TRUE AND PauseVal = TRUE">
+        <Sequence>
+          <Step order="0">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::SVControl:Vis.Controls.Pause">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="false" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="widgets.brease.Image.Action" contentRefId="P10_MainPageContent" widgetRefId="Image1">
+                <Method xsi:type="widgets.brease.Image.Action.SetImage" image="Media/pause_black_24dp.svg" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="EventBinding_1">
+      <Source xsi:type="opcUa.Event" refId="::SVControl:Vis.Controls.Start" event="ValueChanged" />
+      <EventHandler condition="newValue = FALSE">
+        <Action>
+          <Target xsi:type="widgets.brease.Image.Action" contentRefId="P10_MainPageContent" widgetRefId="Image1">
+            <Method xsi:type="widgets.brease.Image.Action.SetImage" image="Media/play_arrow_black_24dp.svg" />
+          </Target>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="P10_MainPageContent.Image2.Click">
+      <Source xsi:type="widgets.brease.Image.Event" contentRefId="P10_MainPageContent" widgetRefId="Image2" event="Click" />
+      <EventHandler>
+        <Action>
+          <Target xsi:type="opcUa.NodeAction" refId="::SVControl:Vis.Controls.Stop">
+            <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+          </Target>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+  </Bindings>
+</EventBindingSet>
